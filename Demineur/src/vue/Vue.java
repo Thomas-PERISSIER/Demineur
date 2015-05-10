@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package vue;
 
 import java.awt.Color;
@@ -23,7 +18,6 @@ import javax.swing.JPanel;
 import javax.swing.border.Border;
 
 /**
- *
  * @author Epulapp
  */
 public class Vue extends JFrame implements Observer {
@@ -40,7 +34,6 @@ public class Vue extends JFrame implements Observer {
                 System.exit(0);
             }
         });
-        
     }
     
     public void build() {
@@ -52,7 +45,6 @@ public class Vue extends JFrame implements Observer {
 
         //ItemListener i = new Item
         m.add(mi);
-        
         jm.add(m);
         
         setJMenuBar(jm);
@@ -75,12 +67,10 @@ public class Vue extends JFrame implements Observer {
         pan.setBorder(blackline);
         add(pan);
         //setContentPane(pan);
-
     }
     
     @Override
     public void update(Observable o, Object arg) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
+    }   
 }
