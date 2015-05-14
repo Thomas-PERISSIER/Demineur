@@ -1,6 +1,5 @@
 package modele;
 
-import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -37,8 +36,9 @@ public class Case {
         return imageCase;
     }
     
+    //Fonction d'ajout du drapeau
     public void ajouterImageDrapeau() throws IOException {
-        BufferedImage imageCaseTmp = ImageIO.read(new File("../../images/flag.png"));
+        BufferedImage imageCaseTmp = ImageIO.read(new File("images/flag.png"));
         setImageCase(imageCaseTmp);
     }
 }
