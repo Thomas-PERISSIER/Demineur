@@ -66,7 +66,7 @@ public class Vue extends JFrame implements Observer {
         
         //Création de l'ensemble des JPanel pour le démineur
         for (int i = 0; i < grille.getNbCases(); i++) {
-            CaseVue caseGrille = new CaseVue(i);
+            CaseVue caseGrille = new CaseVue(grille.getListCases().get(i));
             caseGrille.addMouseListener(new MouseAdapter() {
                 public void mousePressed(MouseEvent mouseEvent) {
                     if (SwingUtilities.isLeftMouseButton(mouseEvent)) {

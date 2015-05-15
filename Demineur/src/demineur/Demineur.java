@@ -19,7 +19,5 @@ public class Demineur {
         //Création de la vue principale
         Vue vue = new Vue(grille);
         vue.setVisible(true);
-        
-        
     }
 }

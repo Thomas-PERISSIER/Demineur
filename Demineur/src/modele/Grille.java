@@ -14,7 +14,7 @@ public class Grille {
     private int widthGrille;
     private int nbCases;
     private int nbMines;
-    private int[][] tabCases;
+    private List<Case> listCases;
 
     public Grille(int widthGrille, int heightGrille) {
         this.widthGrille = widthGrille;
@@ -42,17 +42,17 @@ public class Grille {
         Collections.sort(tabMines);
         
         int positionMineX, positionMineY;
-        tabCases = new int[this.heightGrille][this.widthGrille];
+        listCases = new ArrayList<>();
         
         //Remplissage du tableau
-        int i = 0;
+        int i = 0; int j = 0;
         positionMineX = Integer.parseInt(tabMines.get(i).substring(0, 1));
-        positionMineY = Integer.parseInt(tabMines.get(i).substring(2));        
+        positionMineY = Integer.parseInt(tabMines.get(i).substring(2));
         for (int x = 0; x < this.heightGrille; x++) {
             for (int y = 0; y < this.widthGrille; y++) {
                 if (x == positionMineX && y == positionMineY) {
-                    
-                    tabCases[x][y] = 1; //Si une mine est présente
+                    Case caseModel = new Case(x, y, 'M');
+                    listCases.add(j, caseModel); //Si une mine est présente
                     
                     if (i < tabMines.size() - 1) {
                         i++;
@@ -62,8 +62,10 @@ public class Grille {
                     }
                 }
                 else {
-                    tabCases[x][y] = 0; //Si pas de mine
+                    Case caseModel = new Case(x, y, 'V');
+                    listCases.add(j, caseModel); //Si pas de mine
                 }
+                j++;
             }
         }
     }
@@ -88,7 +90,11 @@ public class Grille {
         return nbCases;
     }
     
-    public int[][] getTabCases() {
-        return tabCases;
+    public int getNbMines() {
+        return nbMines;
+    }
+    
+    public List<Case> getListCases() {
+        return listCases;
     }
 }
