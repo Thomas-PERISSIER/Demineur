@@ -51,7 +51,7 @@ public class Grille {
         for (int x = 0; x < this.heightGrille; x++) {
             for (int y = 0; y < this.widthGrille; y++) {
                 if (x == positionMineX && y == positionMineY) {
-                    Case caseModel = new Case(x, y, 'M');
+                    Case caseModel = new Case(j, x, y, nbCases, 'M', this);
                     listCases.add(j, caseModel); //Si une mine est présente
                     
                     if (i < tabMines.size() - 1) {
@@ -62,7 +62,7 @@ public class Grille {
                     }
                 }
                 else {
-                    Case caseModel = new Case(x, y, 'V');
+                    Case caseModel = new Case(j, x, y, nbCases, 'V', this);
                     listCases.add(j, caseModel); //Si pas de mine
                 }
                 j++;

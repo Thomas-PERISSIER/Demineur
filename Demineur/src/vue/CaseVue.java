@@ -1,12 +1,15 @@
 package vue;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import modele.*;
 
 import java.awt.image.BufferedImage;
 import java.util.Observable;
 import java.util.Observer;
+import javax.swing.BorderFactory;
 import javax.swing.JPanel;
+import javax.swing.border.Border;
 
 /**
  * @author Epulapp
@@ -64,10 +67,15 @@ public class CaseVue extends JPanel implements Observer {
     @Override
     public void update(Observable obs, Object obj) {
         
+        Border blackBorder = BorderFactory.createLineBorder(Color.black, 1);
+        
         if (obs instanceof Case) {
             imageCase = modelCase.getImageCase();
             paintComponent(this.getGraphics());
+            this.setBorder(blackBorder);
         }
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        else {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
     }
 }

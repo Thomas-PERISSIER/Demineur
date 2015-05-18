@@ -3,6 +3,7 @@ package modele;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.Observable;
 import javax.imageio.ImageIO;
 
@@ -11,24 +12,35 @@ import javax.imageio.ImageIO;
  */
 public class Case extends Observable {
     
+    private int numCase;
     private int caseX;
     private int caseY;
-    
     private char typeCase;
-    
     private BufferedImage imageCase;
-    
     private Boolean caseVisible;
     private Boolean caseDrapeau;
     
-    public Case(int caseX, int caseY, char typeCase) {
+    private int nbCases;
+    private Grille grille;
+    private List<Case> caseADJ;
+    
+    public Case(int numCase, int caseX, int caseY, int nbCases, char typeCase, Grille grille) {
+        this.numCase = numCase;
         this.caseX = caseX;
         this.caseY = caseY;
-        
         this.typeCase = typeCase;
+        imageCase = null;
         caseVisible = false;
         caseDrapeau = false;
-        imageCase = null;
+        
+        this.nbCases = nbCases;
+        this.grille = grille;
+        
+        listCaseADJ();
+    }
+    
+    public int getNumCase() {
+        return numCase;
     }
     
     public int getCaseX() {
@@ -59,6 +71,41 @@ public class Case extends Observable {
         return imageCase;
     }
     
+    //Fonction de création du tableau des cases adjacentes...
+    private void listCaseADJ() {
+        
+        if (numCase == 0) {
+            
+        }
+        else if (numCase == nbCases) {
+            
+        }
+        else {
+            caseADJ.add(grille.getListCases().get(caseX));
+        }
+        
+    }
+    
+    //Fonction de test : la case a une Mine... ou pas...
+    public boolean caseAMine() {
+        
+        boolean isEnd = false;
+        
+        if (!caseVisible) {
+            switch (typeCase) {
+            case 'V':
+                
+                break;
+            case 'M':
+                isEnd = true;
+                break;
+            }
+            caseVisible = true;
+        }
+        
+        return isEnd;
+    }
+    
     //Fonction d'ajout du drapeau...
     public void ajouterImageDrapeau() throws IOException {
         if (!caseDrapeau) {
@@ -70,6 +117,8 @@ public class Case extends Observable {
             imageCase = null;
             caseDrapeau = false;
         }
-        notifyObservers(this);
+        //Notification aux observeurs...
+        this.setChanged();
+        this.notifyObservers();
     }
 }

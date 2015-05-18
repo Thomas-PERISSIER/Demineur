@@ -70,7 +70,12 @@ public class Vue extends JFrame implements Observer {
             caseGrille.addMouseListener(new MouseAdapter() {
                 public void mousePressed(MouseEvent mouseEvent) {
                     if (SwingUtilities.isLeftMouseButton(mouseEvent)) {
-                        
+                        if (caseGrille.getCase().caseAMine()) {
+                            System.out.println("La partie est terminée.");
+                        }
+                        else {
+                            System.out.println("La partie continue.");
+                        }
                     }
                     else if (SwingUtilities.isRightMouseButton(mouseEvent)) {
                         try {
