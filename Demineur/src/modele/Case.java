@@ -81,7 +81,7 @@ public class Case extends Observable {
             
         }
         else {
-            caseADJ.add(grille.getListCases().get(caseX));
+            
         }
         
     }
