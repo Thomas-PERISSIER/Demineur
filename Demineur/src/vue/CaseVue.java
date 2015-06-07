@@ -1,78 +1,94 @@
 package vue;
 
-import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
-import modele.*;
-
-import java.awt.image.BufferedImage;
+import java.awt.Image;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
+import modele.*;
 
 /**
  * @author Epulapp
  */
 public class CaseVue extends JPanel implements Observer {
     
-    private int caseX;
-    private int caseY;
-    
-    private BufferedImage imageCase;
+    private Image imageCase;
+    private int nbImageCase;
     
     private Case modelCase;
     
     @SuppressWarnings("LeakingThisInConstructor")
     public CaseVue(Case modelCase) {
-       super();
-       
-       caseX = modelCase.getCaseX();
-       caseY = modelCase.getCaseY();
-       this.modelCase = modelCase;
-       modelCase.addObserver(this);
-       imageCase = null;
-    }
-    
-    public int getCaseX() {
-        return caseX;
-    }
-    
-    public int getCaseY() {
-        return caseY;
+        super();
+        
+        this.modelCase = modelCase;
+        modelCase.addObserver(this);
+        imageCase = null;
+        nbImageCase = 0;
     }
     
     public Case getCase() {
         return modelCase;
     }
     
-    public void setImageCase(BufferedImage imageCase) {
+    public void setImageCase(Image imageCase) {
         this.imageCase = imageCase;
     }
     
-    public BufferedImage getImageCase() {
+    public Image getImageCase() {
         return imageCase;
     }
     
-    //Fonction permettant de dessiner dans le composant JPanel
-    public void paintComponent(Graphics g) {
-        super.paintComponent(g);
+    public int getNbImageCase() {
+        return nbImageCase;
+    }
+    
+    //Fonction permettant de dessiner dans un JPanel
+    //Il est courant en Java de redéfinir la méthode paint pour dessiner dans un JPanel (méthode la plus simple)
+    public void paint(Graphics g) {
+        super.paint(g);
         
-        int height = this.getSize().height;
-        int width = this.getSize().width;
+        Border blackBorderLower = BorderFactory.createLoweredBevelBorder();
+        Border blackBorderRaise = BorderFactory.createRaisedBevelBorder();
         
-        g.drawImage(imageCase, 0, 0, width, height, this);
+        //Si la case n'est pas déjà visible
+        if (modelCase.getCaseVisible()) {
+            //Chargement d'une image : mine ou drapeau
+            if (imageCase != null) {
+                g.drawImage(imageCase, 0, 0, this.getWidth(), this.getHeight(), null);
+                this.setBorder(blackBorderLower);
+            }
+            //Ecriture du nombre de mines adjacentes
+            else if (nbImageCase != 0 && !modelCase.getCaseExDrapeau()) {
+                Font ft = new Font("Arial", Font.BOLD, 40);
+                this.setFont(ft);
+                g.drawString(String.valueOf(nbImageCase), this.getWidth() / 4, (int) (this.getHeight() / 1.08));
+                this.setBorder(blackBorderLower);
+            }
+            //Sans mine et mines adjacentes
+            else {
+                this.setBorder(blackBorderLower);
+            }
+        }
+        //Enlever une mine
+        else if (modelCase.getCaseExDrapeau()) {
+            modelCase.setCaseExDrapeau(Boolean.FALSE);
+            this.setBorder(blackBorderRaise);
+        }
     }
 
     @Override
     public void update(Observable obs, Object obj) {
         
-        Border blackBorder = BorderFactory.createLineBorder(Color.black, 1);
-        
         if (obs instanceof Case) {
             imageCase = modelCase.getImageCase();
-            paintComponent(this.getGraphics());
-            this.setBorder(blackBorder);
+            nbImageCase = modelCase.getNbImageCase();
+            
+            //Appel de la fonction permettant de dessiner dans un JPanel
+            paint(this.getGraphics());
         }
         else {
             throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

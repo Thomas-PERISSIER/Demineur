@@ -1,8 +1,9 @@
 package modele;
 
-import java.awt.image.BufferedImage;
+import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 import javax.imageio.ImageIO;
@@ -12,112 +13,151 @@ import javax.imageio.ImageIO;
  */
 public class Case extends Observable {
     
-    private int numCase;
-    private int caseX;
-    private int caseY;
     private char typeCase;
-    private BufferedImage imageCase;
+    private Image imageCase;
+    private int nbImageCase;
     private Boolean caseVisible;
     private Boolean caseDrapeau;
+    private Boolean caseExDrapeau;
     
-    private int nbCases;
     private Grille grille;
-    private List<Case> caseADJ;
     
-    public Case(int numCase, int caseX, int caseY, int nbCases, char typeCase, Grille grille) {
-        this.numCase = numCase;
-        this.caseX = caseX;
-        this.caseY = caseY;
+    public Case(char typeCase, Grille grille) {
         this.typeCase = typeCase;
         imageCase = null;
         caseVisible = false;
         caseDrapeau = false;
+        caseExDrapeau = false;
         
-        this.nbCases = nbCases;
         this.grille = grille;
-        
-        listCaseADJ();
-    }
-    
-    public int getNumCase() {
-        return numCase;
-    }
-    
-    public int getCaseX() {
-        return caseX;
-    }
-    
-    public int getCaseY() {
-        return caseY;
     }
     
     public char getTypeCase() {
         return typeCase;
     }
     
+    public void setCaseVisible(Boolean caseVisible) {
+        this.caseVisible = caseVisible;
+    }
+    
     public Boolean getCaseVisible() {
         return caseVisible;
+    }
+    
+    public void setCaseDrapeau(Boolean caseDrapeau) {
+        this.caseDrapeau = caseDrapeau;
     }
     
     public Boolean getCaseDrapeau() {
         return caseDrapeau;
     }
     
-    public void setImageCase(BufferedImage imageCase) {
+    public void setCaseExDrapeau(Boolean caseExDrapeau) {
+        this.caseExDrapeau = caseExDrapeau;
+    }
+    
+    public Boolean getCaseExDrapeau() {
+        return caseExDrapeau;
+    }
+    
+    public void setImageCase(Image imageCase) {
         this.imageCase = imageCase;
     }
     
-    public BufferedImage getImageCase() {
+    public Image getImageCase() {
         return imageCase;
     }
     
-    //Fonction de création du tableau des cases adjacentes...
-    private void listCaseADJ() {
-        
-        if (numCase == 0) {
-            
-        }
-        else if (numCase == nbCases) {
-            
-        }
-        else {
-            
-        }
-        
+    public void setNbImageCase(int nbImageCase) {
+        this.nbImageCase = nbImageCase;
+    }
+    
+    public int getNbImageCase() {
+        return nbImageCase;
     }
     
     //Fonction de test : la case a une Mine... ou pas...
-    public boolean caseAMine() {
+    public Boolean caseASMine() throws IOException {
         
-        boolean isEnd = false;
-        
-        if (!caseVisible) {
+        if (!caseVisible && !caseDrapeau) {
             switch (typeCase) {
-            case 'V':
-                
-                break;
-            case 'M':
-                isEnd = true;
-                break;
+                //La case ne possède pas de mine
+                case 'V':
+                    imageCase = null;
+                    //Comptabilise le nombre de cases visibles
+                    grille.setNbCasesNVides(grille.getNbCasesNVides() + 1);
+                    //Propagation lorsqu'il n'y a pas de cases adjacente possèdant une mine
+                    if (nbImageCase == 0) {
+                        propCases();
+                    }
+                    caseVisible = true;
+                    //Notification aux observeurs...
+                    notifObservers();
+                    grille.testEOTGame();
+                    break;
+                case 'M':
+                    //Fin de partie en affichant les mines sur la grille
+                    grille.propCasesAMine();
+                    break;
             }
-            caseVisible = true;
         }
         
-        return isEnd;
+        return grille.getClickOnEOTGame();
     }
     
     //Fonction d'ajout du drapeau...
     public void ajouterImageDrapeau() throws IOException {
-        if (!caseDrapeau) {
-            BufferedImage imageCaseTmp = ImageIO.read(new File("images/flag.png"));
-            imageCase = imageCaseTmp;
-            caseDrapeau = true;
+        
+        if (!caseVisible || caseDrapeau) {
+            //Ajout d'un drapeau si il n'y en a pas déjà
+            if (!caseDrapeau) {
+                //Importation de l'image du drapeau
+                Image imageCaseTmp = ImageIO.read(new File("images/flag.png"));
+                imageCase = imageCaseTmp;
+                caseVisible = true;
+                caseDrapeau = true;
+                caseExDrapeau = true;
+                //Comptabilise le nombre de cases ayant un drapeau
+                grille.setNbDrapeau(grille.getNbDrapeau() + 1);
+            }
+            //Retirer le drapeau s'il y en a déjà un
+            else {
+                imageCase = null;
+                caseVisible = false;
+                caseDrapeau = false;
+                //Comptabilise le nombre de cases ayant un drapeau
+                grille.setNbDrapeau(grille.getNbDrapeau() - 1);
+            }
+            
+            //Notification aux observeurs...
+            notifObservers();
         }
-        else {
-            imageCase = null;
-            caseDrapeau = false;
+    }
+    
+    //Fonction de propagation sur les cases adjacentes...
+    private void propCases() throws IOException {
+        
+        //Retourne les cases adjacentes
+        List<Case> caseADJ = new ArrayList<>();
+        caseADJ = grille.casesADJ(this);
+        
+        //Pour chacune d'entres elle, on affiche ou propage..
+        //On comptablise également le nombre de cases affichées
+        for (Case caseADJ1 : caseADJ) {
+            if (!caseADJ1.getCaseVisible()) {
+                caseADJ1.setCaseVisible(true);
+                grille.setNbCasesNVides(grille.getNbCasesNVides() + 1);
+                if (caseADJ1.getNbImageCase() == 0) {
+                    caseADJ1.propCases();
+                }
+                //Notification aux observeurs...
+                caseADJ1.notifObservers();
+            }
         }
-        //Notification aux observeurs...
+    }
+    
+    //Fonction de notifications aux observeurs...
+    public void notifObservers() {
         this.setChanged();
         this.notifyObservers();
     }
