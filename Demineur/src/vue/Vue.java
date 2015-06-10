@@ -15,8 +15,6 @@ import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
 import java.text.DecimalFormat;
-import java.util.Observable;
-import java.util.Observer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
@@ -39,7 +37,7 @@ import modele.*;
 /**
  * @author Epulapp
  */
-public class Vue extends JFrame implements Observer, ActionListener {
+public class Vue extends JFrame {
     
     private JLabel nbCasesRestantes;
     private JLabel nbCasesMineRestantes;
@@ -331,15 +329,5 @@ public class Vue extends JFrame implements Observer, ActionListener {
         panelPrincipal.add(panelPrincipalGame);
         
         add(panelPrincipal);
-    }
-
-    @Override
-    public void update(Observable o, Object arg) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
