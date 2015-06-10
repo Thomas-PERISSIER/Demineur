@@ -15,7 +15,7 @@ public class Case extends Observable {
     
     private char typeCase;
     private Image imageCase;
-    private int nbImageCase;
+    private int nbImageCase; //Nombre de mines adjacentes
     private Boolean caseVisible;
     private Boolean caseDrapeau;
     private Boolean caseExDrapeau;

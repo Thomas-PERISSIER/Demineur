@@ -1,5 +1,6 @@
 package vue;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -65,6 +66,27 @@ public class CaseVue extends JPanel implements Observer {
             else if (nbImageCase != 0 && !modelCase.getCaseExDrapeau()) {
                 Font ft = new Font("Arial", Font.BOLD, 40);
                 this.setFont(ft);
+                
+                switch (nbImageCase) {
+                    case 1:
+                        this.setForeground(Color.BLUE);
+                        break;
+                    case 2:
+                        this.setForeground(Color.GREEN);
+                        break;
+                    case 3:
+                        this.setForeground(Color.RED);
+                        break;
+                    case 4:
+                        this.setForeground(Color.GRAY);
+                        break;
+                    case 5:
+                        this.setForeground(Color.CYAN);
+                        break;
+                    case 6:
+                        this.setForeground(Color.BLACK);
+                        break;
+                }
                 g.drawString(String.valueOf(nbImageCase), this.getWidth() / 4, (int) (this.getHeight() / 1.08));
                 this.setBorder(blackBorderLower);
             }

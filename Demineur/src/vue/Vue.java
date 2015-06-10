@@ -171,7 +171,7 @@ public class Vue extends JFrame implements Observer, ActionListener {
         }
         
         //Compteur du nombre de cases restantes pour les mines
-        Image imageCaseMine = ImageIO.read(new File("images/mine.jpg"));
+        Image imageCaseMine = ImageIO.read(new File("images/mine.png"));
         ImageIcon iconCaseMine = new ImageIcon(imageCaseMine);
         JLabel libNbCasesMineRestantes = new JLabel(iconCaseMine);
         panelCaractGame.add(libNbCasesMineRestantes);

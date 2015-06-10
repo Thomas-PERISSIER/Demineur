@@ -21,7 +21,7 @@ public class Grille {
     private int heightGrille;
     private int widthGrille;
     private int nbCases;
-    private int nbCasesNVides;
+    private int nbCasesNVides; //Nombre de cases visibles
     private int nbMines;
     private int nbDrapeau;
     private Case[][] tabCases;
@@ -240,7 +240,7 @@ public class Grille {
     public void propCasesAMine() throws IOException {
         
         //Image de la mine
-        Image imageCaseTmp = ImageIO.read(new File("images/mine.jpg"));
+        Image imageCaseTmp = ImageIO.read(new File("images/mine.png"));
         
         for (int x = 0; x < this.heightGrille; x++) {
             for (int y = 0; y < this.widthGrille; y++) {
