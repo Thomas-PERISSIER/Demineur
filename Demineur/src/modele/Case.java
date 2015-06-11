@@ -111,7 +111,7 @@ public class Case extends Observable {
             //Ajout d'un drapeau si il n'y en a pas déjà
             if (!caseDrapeau) {
                 //Importation de l'image du drapeau
-                nomImage = "images/flag.png";
+                nomImage = "./images/flag.png";
                 caseVisible = true;
                 caseDrapeau = true;
                 caseExDrapeau = true;

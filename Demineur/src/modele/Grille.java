@@ -242,7 +242,7 @@ public class Grille {
             for (int y = 0; y < this.widthGrille; y++) {
                 if (!tabCases[x][y].getCaseVisible() && tabCases[x][y].getTypeCase() == 'M') {
                     tabCases[x][y].setCaseVisible(true);
-                    tabCases[x][y].setNomImage("images/mine.png");
+                    tabCases[x][y].setNomImage("./images/mine.png");
                     nbCasesNVides++;
                     tabCases[x][y].notifObservers();
                 }

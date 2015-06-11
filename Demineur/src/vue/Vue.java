@@ -154,7 +154,7 @@ public class Vue extends JFrame {
         panelCaractGame.setLayout(new BoxLayout(panelCaractGame, BoxLayout.X_AXIS));
         
         //Compteur du nombre de cases non visibles
-        Image imageCaseVide = ImageIO.read(new File("images/vide.png"));
+        Image imageCaseVide = ImageIO.read(new File("./images/vide.PNG"));
         ImageIcon iconCaseVide = new ImageIcon(imageCaseVide);
         JLabel libNbCasesRestantes = new JLabel(iconCaseVide);
         panelCaractGame.add(libNbCasesRestantes);
@@ -169,7 +169,7 @@ public class Vue extends JFrame {
         }
         
         //Compteur du nombre de cases restantes pour les mines
-        Image imageCaseMine = ImageIO.read(new File("images/mine.png"));
+        Image imageCaseMine = ImageIO.read(new File("./images/mine.png"));
         ImageIcon iconCaseMine = new ImageIcon(imageCaseMine);
         JLabel libNbCasesMineRestantes = new JLabel(iconCaseMine);
         panelCaractGame.add(libNbCasesMineRestantes);
