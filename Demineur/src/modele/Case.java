@@ -1,12 +1,9 @@
 package modele;
 
-import java.awt.Image;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
-import javax.imageio.ImageIO;
 
 /**
  * @author Epulapp
@@ -14,7 +11,7 @@ import javax.imageio.ImageIO;
 public class Case extends Observable {
     
     private char typeCase;
-    private Image imageCase;
+    private String nomImage;
     private int nbImageCase; //Nombre de mines adjacentes
     private Boolean caseVisible;
     private Boolean caseDrapeau;
@@ -24,7 +21,7 @@ public class Case extends Observable {
     
     public Case(char typeCase, Grille grille) {
         this.typeCase = typeCase;
-        imageCase = null;
+        nomImage = "";
         caseVisible = false;
         caseDrapeau = false;
         caseExDrapeau = false;
@@ -60,12 +57,12 @@ public class Case extends Observable {
         return caseExDrapeau;
     }
     
-    public void setImageCase(Image imageCase) {
-        this.imageCase = imageCase;
+    public void setNomImage(String nomImage) {
+        this.nomImage = nomImage;
     }
     
-    public Image getImageCase() {
-        return imageCase;
+    public String getNomImage() {
+        return nomImage;
     }
     
     public void setNbImageCase(int nbImageCase) {
@@ -77,13 +74,13 @@ public class Case extends Observable {
     }
     
     //Fonction de test : la case a une Mine... ou pas...
-    public Boolean caseASMine() throws IOException {
+    public Boolean caseASMine()  {
         
         if (!caseVisible && !caseDrapeau) {
             switch (typeCase) {
                 //La case ne possède pas de mine
                 case 'V':
-                    imageCase = null;
+                    nomImage = "";
                     //Propagation lorsqu'il n'y a pas de cases adjacente possèdant une mine
                     if (nbImageCase == 0) {
                         propCases();
@@ -114,8 +111,7 @@ public class Case extends Observable {
             //Ajout d'un drapeau si il n'y en a pas déjà
             if (!caseDrapeau) {
                 //Importation de l'image du drapeau
-                Image imageCaseTmp = ImageIO.read(new File("images/flag.png"));
-                imageCase = imageCaseTmp;
+                nomImage = "images/flag.png";
                 caseVisible = true;
                 caseDrapeau = true;
                 caseExDrapeau = true;
@@ -125,7 +121,7 @@ public class Case extends Observable {
             }
             //Retirer le drapeau s'il y en a déjà un
             else {
-                imageCase = null;
+                nomImage = "";
                 caseVisible = false;
                 caseDrapeau = false;
                 //Comptabilise le nombre de cases ayant un drapeau
@@ -139,7 +135,7 @@ public class Case extends Observable {
     }
     
     //Fonction de propagation sur les cases adjacentes...
-    private void propCases() throws IOException {
+    private void propCases()  {
         
         //Retourne les cases adjacentes
         List<Case> caseADJ = new ArrayList<>();

@@ -229,81 +229,72 @@ public class Vue extends JFrame {
                 //Evénements liés à la souris
                 public void mousePressed(MouseEvent mouseEvent) {
                     if (SwingUtilities.isLeftMouseButton(mouseEvent)) {
-                        try {
-                            //Appeler la méthode pour rendre visible les cases...
-                            grille.setClickOnEOTGame(caseGrille.getCase().caseASMine());
-                            
-                            //Mise à jour du panel caractéristique
-                            nbCasesRestantes.setText(String.valueOf(grille.getNbCases() - grille.getNbCasesNVides()));
-                            nbCasesMineRestantes.setText(String.valueOf(grille.getNbMines()- grille.getNbDrapeau()));
-                            
-                            //Si le jeu est terminé
-                            if (grille.getClickOnEOTGame()) {
-                                //Création de la fenêtre de dialogue pour la fin de partie
-                                JDialog fenEOTGame = new JDialog();
-                                fenEOTGame.setTitle("Fin de la partie");
-                                fenEOTGame.setSize(400, 140);
-                                fenEOTGame.addWindowListener(new WindowAdapter() {
-                                    @Override
-                                    //Fonction de fermeture du démineur
-                                    public void windowClosing(WindowEvent arg0) {
-                                        super.windowClosing(arg0);
-                                        System.exit(0);
-                                    }
-                                });   
-                                
-                                Box boxEOTGame = Box.createVerticalBox();
-                                boxEOTGame.setAlignmentX(Component.CENTER_ALIGNMENT);
-                                
-                                JPanel panEOTGame = new JPanel();
-                                JLabel messageEOTGame;
-                                if (grille.getWinGame()) {
-                                     messageEOTGame = new JLabel("La partie est terminée et vous avez gagné !");
+                        grille.setClickOnEOTGame(caseGrille.getCase().caseASMine());
+                        nbCasesRestantes.setText(String.valueOf(grille.getNbCases() - grille.getNbCasesNVides()));
+                        nbCasesMineRestantes.setText(String.valueOf(grille.getNbMines()- grille.getNbDrapeau()));
+                        if (grille.getClickOnEOTGame()) {
+                            //Création de la fenêtre de dialogue pour la fin de partie
+                            JDialog fenEOTGame = new JDialog();
+                            fenEOTGame.setTitle("Fin de la partie");
+                            fenEOTGame.setSize(400, 140);
+                            fenEOTGame.addWindowListener(new WindowAdapter() {
+                                @Override
+                                //Fonction de fermeture du démineur
+                                public void windowClosing(WindowEvent arg0) {
+                                    super.windowClosing(arg0);
+                                    System.exit(0);
                                 }
-                                else {
-                                    messageEOTGame = new JLabel("La partie est terminée et vous avez perdu !");
-                                }
-                                panEOTGame.add(messageEOTGame);
-                                panEOTGame.add(Box.createRigidArea(new Dimension(0, 10)));
-                                JLabel message2EOTGame = new JLabel("Souhaitez-vous recommencer une partie ?");
-                                panEOTGame.add(message2EOTGame);
-                                boxEOTGame.add(panEOTGame);
-                                
-                                JPanel buttonEOTGame = new JPanel();
-                                JButton yesBeginGame = new JButton("Oui");
-                                
-                                //Bouton pour recommencer une partie de démineur
-                                yesBeginGame.addActionListener(new ActionListener() {
-                                    
-                                    @Override
-                                    public void actionPerformed(ActionEvent e) {
-                                        recommencerPartie = true;
-                                        fenEOTGame.dispose();
-                                    }
-                                });
-                                
-                                buttonEOTGame.add(yesBeginGame);
-                                buttonEOTGame.add(Box.createRigidArea(new Dimension(10, 0)));
-                                
-                                //Bouton qui permet alors de quitter le jeu
-                                JButton noBeginGame = new JButton("Non");
-                                
-                                noBeginGame.addActionListener(new ActionListener() {
-                                    
-                                    @Override
-                                    public void actionPerformed(ActionEvent e) {
-                                        System.exit(0);
-                                    }
-                                });
-                                buttonEOTGame.add(noBeginGame);
-                                boxEOTGame.add(buttonEOTGame);
-                                
-                                fenEOTGame.add(boxEOTGame);
-                                fenEOTGame.setModal(true);
-                                fenEOTGame.setVisible(true);
+                            });
+                            
+                            Box boxEOTGame = Box.createVerticalBox();
+                            boxEOTGame.setAlignmentX(Component.CENTER_ALIGNMENT);
+                            
+                            JPanel panEOTGame = new JPanel();
+                            JLabel messageEOTGame;
+                            if (grille.getWinGame()) {
+                                messageEOTGame = new JLabel("La partie est terminée et vous avez gagné !");
                             }
-                        } catch (IOException ex) {
-                            Logger.getLogger(Vue.class.getName()).log(Level.SEVERE, null, ex);
+                            else {
+                                messageEOTGame = new JLabel("La partie est terminée et vous avez perdu !");
+                            }
+                            panEOTGame.add(messageEOTGame);
+                            panEOTGame.add(Box.createRigidArea(new Dimension(0, 10)));
+                            JLabel message2EOTGame = new JLabel("Souhaitez-vous recommencer une partie ?");
+                            panEOTGame.add(message2EOTGame);
+                            boxEOTGame.add(panEOTGame);
+                               
+                            JPanel buttonEOTGame = new JPanel();
+                            JButton yesBeginGame = new JButton("Oui");
+                            
+                            //Bouton pour recommencer une partie de démineur
+                            yesBeginGame.addActionListener(new ActionListener() {
+                                
+                                @Override
+                                public void actionPerformed(ActionEvent e) {
+                                    recommencerPartie = true;
+                                    fenEOTGame.dispose();
+                                }
+                            });
+                            
+                            buttonEOTGame.add(yesBeginGame);
+                            buttonEOTGame.add(Box.createRigidArea(new Dimension(10, 0)));
+                            
+                            //Bouton qui permet alors de quitter le jeu
+                            JButton noBeginGame = new JButton("Non");
+                            
+                            noBeginGame.addActionListener(new ActionListener() {
+                                
+                                @Override
+                                public void actionPerformed(ActionEvent e) {
+                                    System.exit(0);
+                                }
+                            });
+                            buttonEOTGame.add(noBeginGame);
+                            boxEOTGame.add(buttonEOTGame);
+                            
+                            fenEOTGame.add(boxEOTGame);
+                            fenEOTGame.setModal(true);
+                            fenEOTGame.setVisible(true);
                         }
                     }
                     else if (SwingUtilities.isRightMouseButton(mouseEvent)) {

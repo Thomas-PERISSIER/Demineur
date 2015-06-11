@@ -5,7 +5,6 @@ import static demineur.Demineur.*;
 import java.awt.Image;
 import java.awt.Point;
 import java.io.File;
-import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -237,16 +236,13 @@ public class Grille {
     }
     
     //Fonction qui rend visible toutes les mines de la grille (fin de partie)
-    public void propCasesAMine() throws IOException {
-        
-        //Image de la mine
-        Image imageCaseTmp = ImageIO.read(new File("images/mine.png"));
+    public void propCasesAMine()  {
         
         for (int x = 0; x < this.heightGrille; x++) {
             for (int y = 0; y < this.widthGrille; y++) {
                 if (!tabCases[x][y].getCaseVisible() && tabCases[x][y].getTypeCase() == 'M') {
                     tabCases[x][y].setCaseVisible(true);
-                    tabCases[x][y].setImageCase(imageCaseTmp);
+                    tabCases[x][y].setNomImage("images/mine.png");
                     nbCasesNVides++;
                     tabCases[x][y].notifObservers();
                 }

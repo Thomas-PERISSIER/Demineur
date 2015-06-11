@@ -4,8 +4,13 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.io.File;
+import java.io.IOException;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
@@ -106,7 +111,14 @@ public class CaseVue extends JPanel implements Observer {
     public void update(Observable obs, Object obj) {
         
         if (obs instanceof Case) {
-            imageCase = modelCase.getImageCase();
+            if (modelCase.getNomImage() != "") {
+                try {
+                    imageCase = ImageIO.read(new File(modelCase.getNomImage()));
+                } catch (IOException ex) {
+                    Logger.getLogger(CaseVue.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            
             nbImageCase = modelCase.getNbImageCase();
             
             //Appel de la fonction permettant de dessiner dans un JPanel
