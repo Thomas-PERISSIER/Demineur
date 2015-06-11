@@ -122,7 +122,7 @@ public class Vue extends JFrame {
             
         });
         jmD.add(jmiDifFacile);
-        JMenuItem jmiDifNormal = new JMenuItem("Normale");
+        JMenuItem jmiDifNormal = new JMenuItem("Normal");
         jmiDifNormal.addActionListener(new ActionListener() {
 
             @Override
