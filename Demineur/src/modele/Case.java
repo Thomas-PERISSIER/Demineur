@@ -84,11 +84,13 @@ public class Case extends Observable {
                 //La case ne possède pas de mine
                 case 'V':
                     imageCase = null;
-                    //Comptabilise le nombre de cases visibles
-                    grille.setNbCasesNVides(grille.getNbCasesNVides() + 1);
                     //Propagation lorsqu'il n'y a pas de cases adjacente possèdant une mine
                     if (nbImageCase == 0) {
                         propCases();
+                    }
+                    else {
+                        //Comptabilise le nombre de cases visibles
+                        grille.setNbCasesNVides(grille.getNbCasesNVides() + 1);
                     }
                     caseVisible = true;
                     //Notification aux observeurs...
@@ -118,6 +120,7 @@ public class Case extends Observable {
                 caseDrapeau = true;
                 caseExDrapeau = true;
                 //Comptabilise le nombre de cases ayant un drapeau
+                grille.setNbCasesNVides(grille.getNbCasesNVides() + 1);
                 grille.setNbDrapeau(grille.getNbDrapeau() + 1);
             }
             //Retirer le drapeau s'il y en a déjà un
@@ -126,6 +129,7 @@ public class Case extends Observable {
                 caseVisible = false;
                 caseDrapeau = false;
                 //Comptabilise le nombre de cases ayant un drapeau
+                grille.setNbCasesNVides(grille.getNbCasesNVides() - 1);
                 grille.setNbDrapeau(grille.getNbDrapeau() - 1);
             }
             

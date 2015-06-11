@@ -81,7 +81,7 @@ public class CaseVue extends JPanel implements Observer {
                         this.setForeground(Color.GRAY);
                         break;
                     case 5:
-                        this.setForeground(Color.CYAN);
+                        this.setForeground(Color.ORANGE);
                         break;
                     case 6:
                         this.setForeground(Color.BLACK);
