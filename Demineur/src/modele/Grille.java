@@ -2,15 +2,12 @@ package modele;
 
 import static demineur.Demineur.*;
 
-import java.awt.Image;
 import java.awt.Point;
-import java.io.File;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
-import javax.imageio.ImageIO;
 
 /**
  * @author Epulapp
